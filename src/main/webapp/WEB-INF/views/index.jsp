@@ -27,7 +27,7 @@
 
                 <button type="button" id="menu-toggle" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 
-                    <img src="/resource/images/sidebar_memu_white.png" style="width: 20px; height: 20px;">
+                    <img src="/resources/images/sidebar_memu_white.png" style="width: 20px; height: 20px;">
                 </button>
             </div>
         </div>
@@ -40,7 +40,7 @@
                     <li class="sidebar-brand">
                         <div style="width:234px; height:56px; background-color: #f5f5f5; margin:8px;">
                             <div style="float:left">
-                                <img src="/resource/images/sidebar_user.png" style="width: 20px; height: 20px;">
+                                <img src="/resources/images/sidebar_user.png" style="width: 20px; height: 20px;">
                                 <?=$_SESSION['id']?>
                             </div>
                             <!--<div style="float:right; padding:16px">
@@ -53,7 +53,7 @@
                     <li>
                         <div data-toggle="modal" data-target="#myModal">
                             <div class="text-center" style="width:253px; height:203px;     padding-top: 64px;">
-                                <img src="/resource/images/sidebar_point.png" style="width: 20px; height: 20px; margin-bottom:10px">
+                                <img src="/resources/images/sidebar_point.png" style="width: 20px; height: 20px; margin-bottom:10px">
                                 <div style="font-size:1.5em; color:black;">포인트 충전</div>
                                 <div style="font-size:1.1em; color:#9b9b9b;">
                                     <div id="point">보유 포인트 <?=$_SESSION['point']?>P</div>
@@ -68,7 +68,7 @@
                     <li>
                         <a href="logout.jsp">
                             <div class="text-center" style="width:253px; height:170px;     padding-top: 77px;">
-                                <img src="/resource/images/sidebar_logout.png" style="width: 20px; height: 20px; margin-bottom:10px">
+                                <img src="/resources/images/sidebar_logout.png" style="width: 20px; height: 20px; margin-bottom:10px">
 
                                 <div style="font-size:1.5em">로그아웃</div>
                             </div>
@@ -109,7 +109,7 @@
                 <div class="container-fluid">
                     <div class="text-center">
                         <div style="font-size:3em" class="form-space">
-                            <div><img src="/resource/images/login_logo.png" style="width: 75px; height: 75px;"></div>
+                            <div><img src="/resources/images/login_logo.png" style="width: 75px; height: 75px;"></div>
                             Printee
                         </div>
                         <div style="font-size:1.1em; margin: 20px 0 40px 0; line-height: 29px;">
@@ -134,7 +134,7 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="/resource/js/main.js"></script>
+    <script src="/resources/js/main.js"></script>
     <!-- Menu Toggle Script -->
     <script>
         $("#menu-toggle").click(function(e) {
