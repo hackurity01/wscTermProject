@@ -1,15 +1,16 @@
 package koreatech.cse.controller.rest;
 
-import koreatech.cse.domain.rest.cs.daum.blog.DaumBlog;
-import koreatech.cse.domain.rest.cs.daum.board.DaumBoard;
-import koreatech.cse.domain.rest.cs.daum.knowledge.DaumKnowledge;
-import koreatech.cse.domain.rest.cs.daum.web.Web;
-import koreatech.cse.domain.rest.cs.google.GoogleSearch;
-import koreatech.cse.domain.rest.cs.naver.blog.Blog;
-import koreatech.cse.domain.rest.cs.naver.cafearticle.CafeArticle;
-import koreatech.cse.domain.rest.cs.naver.encyc.Encyc;
-import koreatech.cse.domain.rest.cs.naver.kin.Kin;
-import koreatech.cse.domain.rest.cs.naver.webkr.Webkr;
+
+import domain.rest.cs.daum.blog.DaumBlog;
+import domain.rest.cs.daum.board.DaumBoard;
+import domain.rest.cs.daum.knowledge.DaumKnowledge;
+import domain.rest.cs.daum.web.Web;
+import domain.rest.cs.google.GoogleSearch;
+import domain.rest.cs.naver.blog.Blog;
+import domain.rest.cs.naver.cafearticle.CafeArticle;
+import domain.rest.cs.naver.encyc.Encyc;
+import domain.rest.cs.naver.kin.Kin;
+import domain.rest.cs.naver.webkr.Webkr;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
