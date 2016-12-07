@@ -16,8 +16,6 @@ function post_to_url(path, params, method) {
   form.submit();
 }
 
-var publicKeyModulus = "${publicKeyModulus}";
-var publicKeyExponent = "${publicKeyExponent}";
 var securedUsername;
 var securedPassword;
 
