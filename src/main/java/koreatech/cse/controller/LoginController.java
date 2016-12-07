@@ -8,6 +8,8 @@ import org.jsoup.select.Elements;
 import org.snu.ids.ha.index.Keyword;
 import org.snu.ids.ha.index.KeywordExtractor;
 import org.snu.ids.ha.index.KeywordList;
+import org.snu.ids.ha.ma.MorphemeAnalyzer;
+import org.snu.ids.ha.ma.Sentence;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +21,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by YDK on 2016-12-08.
@@ -246,18 +247,32 @@ public class LoginController {
                     System.out.println(write_doc.select("div.class_qna .board_view tr:eq(3) td").text());
 
                     ////////////////////////// 키워드 추출 ////////////////////////////////
-                    // string to extract keywords
-                    String strToExtrtKwrd = write_doc.select("div.class_qna .board_view tr:eq(3) td").text();
-                    // init KeywordExtractor
-                    KeywordExtractor ke = new KeywordExtractor();
-                    // extract keywords
-                    KeywordList kl = ke.extractKeyword(strToExtrtKwrd, false);
-
-                    System.out.println("===========================\n");
-                    // print result
-                    for( int i = 0; i < kl.size(); i++ ) {
-                        Keyword kwrd = kl.get(i);
-                        System.out.println(kwrd.getString() + "\t" + kwrd.getCnt());
+                    try {
+                        String content = write_doc.select("div.class_qna .board_view tr:eq(3) td").text();
+                        MorphemeAnalyzer ma = new MorphemeAnalyzer();
+                        ma.createLogger(null);
+                        List ret = ma.analyze(content);
+                        ret = ma.postProcess(ret);
+                        ret = ma.leaveJustBest(ret);
+                        List stl = ma.divideToSentences(ret);
+                        for (int i = 0; i < stl.size(); i++) {
+                            Sentence st = (Sentence) stl.get(i);
+                            System.out.println("===>  " + st.getSentence());
+                            for (int j = 0; j < st.size(); j++) {
+                                Pattern pattern = Pattern.compile("[0-9]+/([^\\+]*)/NNG"); //img 태그 src 추출 정규표현식
+                                Matcher matcher = pattern.matcher(st.get(j).toString());
+                                String key = "";
+                                while (matcher.find()) {
+                                    key += matcher.group(1);
+                                }
+                                System.out.println(key);
+                            }
+                        }
+                        ma.closeLogger();
+                    } catch (Exception e) {
+                        System.out.println("트라이캐치");
+                        e.printStackTrace();
+                        System.exit(0);
                     }
                 }
             }
