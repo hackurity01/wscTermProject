@@ -13,4 +13,12 @@ public class HomeController {
         model.addAttribute("textFromController", "World");
         return "hello";
     }
+
+    @RequestMapping("/index")
+    public String index() {
+
+        return "index";
+    }
+
+
 }
