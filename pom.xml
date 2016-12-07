@@ -106,27 +106,6 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.8.6</version>
         </dependency>
-        <!-- Spring Security -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>${spring-security.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>${spring-security.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-taglibs</artifactId>
-            <version>${spring-security.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.social</groupId>
-            <artifactId>spring-social-core</artifactId>
-            <version>1.1.4.RELEASE</version>
-        </dependency>
 
         <!-- H2 DB -->
         <dependency>
@@ -156,6 +135,8 @@
             <artifactId>wsc</artifactId>
             <version>001</version>
         </dependency>
+
+
     </dependencies>
 
 
