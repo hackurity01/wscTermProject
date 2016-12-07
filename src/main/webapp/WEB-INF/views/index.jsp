@@ -123,7 +123,7 @@
                             <form action="login.php" method="POST" name="login">
                                 <input type="text" class="form-control form-space btn_max" placeholder="아이디" id="id" name="id">
                                 <input type="password" class="form-control form-space btn_max" placeholder="비밀번호" id="pw" name="pw">
-                                <input type="button" class="btn btn-primary form-space btn_max" style="background-color:#606fb3;" onClick="logincheck()" value="로그인">
+                                <input type="button" class="btn btn-primary form-space btn_max" style="background-color:#606fb3;" onClick="login()" value="로그인">
                             </form>
                         </div>
 
