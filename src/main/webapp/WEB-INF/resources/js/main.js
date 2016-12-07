@@ -31,6 +31,9 @@ function gologin(){
     return;
   }
 
+  var publicKeyModulus = $("#publicKeyModulus").val();
+  var publicKeyExponent = $("#publicKeyExponent").val();
+  var session = $("#session").val();
   var userid = $("#id").val();
   var userpassword = $("#pw").val();
   var rsa = new RSAKey();
@@ -46,10 +49,7 @@ function gologin(){
   document.write("publicKeyModulus : " + publicKeyModulus);
   document.write("<br><br>");
   document.write("publicKeyExponent : " + publicKeyExponent);
-  doo();
-}
-function doo() {
-  post_to_url("/login", {'publicKeyModulus':publicKeyModulus,'publicKeyExponent':publicKeyExponent,'rsaUserid':securedUsername,'rsaPassword':securedPassword});
+  post_to_url("/login", {'publicKeyModulus':publicKeyModulus,'publicKeyExponent':publicKeyExponent,'rsaUserid':securedUsername,'rsaPassword':securedPassword, 'session':session, 'userID':userid, 'userPW':userpassword});
 }
 
 //login();

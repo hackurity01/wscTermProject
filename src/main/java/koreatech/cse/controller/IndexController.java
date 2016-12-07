@@ -37,6 +37,9 @@ public class IndexController {
                     session = cookie;
                 }
             }
+            System.out.println(session);
+            System.out.println("\n==========\n"+cookie);
+
 
             String publicKeyModulus = "";
             String publicKeyExponent = "";
