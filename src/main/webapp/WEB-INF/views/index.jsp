@@ -21,51 +21,9 @@
     <script src="/resources/js/main.js"></script>
 
 </head>
-<body>
-    <nav class="navbar" style="background-color:#3b52af;">
-        <div class="container-fluid">
-            <div class="navbar-header">
-
-                <button type="button" id="menu-toggle" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-
-                    <img src="/resources/images/sidebar_memu_white.png" style="width: 20px; height: 20px;">
-                </button>
-            </div>
-        </div>
-    </nav>
+<body class="body_set">
     <div id="container">
         <div id="wrapper">
-            <!-- Sidebar -->
-            <div id="sidebar-wrapper">
-                <ul class="sidebar-nav">
-                    <li class="sidebar-brand">
-                        <div style="width:234px; height:56px; background-color: #f5f5f5; margin:8px;">
-                        </div>
-                    </li>
-                    <li>
-                        <div  style="height:1px; width: 25px;border:solid 1px black; margin:0 113px 0 120px">
-                        </div>
-                    </li>
-                    <li>
-                        <a href="logout.jsp">
-                            <div class="text-center" style="width:253px; height:170px;     padding-top: 77px;">
-                                <img src="/resources/images/sidebar_logout.png" style="width: 20px; height: 20px; margin-bottom:10px">
-
-                                <div style="font-size:1.5em">로그아웃</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="text-center" style="width:253px; margin-top:100px">
-                            <div style="color:#d0d0d0; font-size:1.5em">
-                                Printee
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-
             <!-- /#sidebar-wrapper -->
             <!-- Page Content -->
             <div id="page-content-wrapper" style=" margin-top: 18px;">
@@ -75,8 +33,8 @@
                             과제 도우미 서비스
                         </div>
                         <div style="font-size:1.1em; margin: 20px 0 40px 0; line-height: 29px;">
-                            내 과제를 한눈에, <br>
-                            Printee을 이용하세요!
+                            내 과제를 한눈에<br>
+                            과제 관련 자료를 한방에!
                         </div>
                         <div>
                             <form  method="POST" name="login">
