@@ -4,15 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Scanner;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * Created by YDK on 2016-12-08.
@@ -22,6 +19,7 @@ import java.util.Scanner;
 @RequestMapping("/")
 public class IndexController {
     String session = "";
+
     @RequestMapping
     public String index(Model model) {
         try {
@@ -56,6 +54,7 @@ public class IndexController {
 
             model.addAttribute("publicKeyModulus", publicKeyModulus);
             model.addAttribute("publicKeyExponent", publicKeyExponent);
+            model.addAttribute("session", session);
 
         } catch (MalformedURLException e) {
             System.out.println("The URL address is incorrect.");

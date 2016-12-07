@@ -23,14 +23,14 @@ import java.util.Scanner;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-    String session = "";
-
     @RequestMapping(method = RequestMethod.POST)
     public String login(Model model,
                         @RequestParam(value="publicKeyModulus") String publicKeyModulus,
                         @RequestParam(value="publicKeyExponent") String publicKeyExponent,
                         @RequestParam(value="rsaUserid") String rsaUserid,
-                        @RequestParam(value="rsaPassword") String rsaPassword) {
+                        @RequestParam(value="rsaPassword") String rsaPassword,
+                        @RequestParam(value="session") String session) {
+
 
         System.out.println(rsaUserid);
         return "login";
