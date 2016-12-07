@@ -12,8 +12,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="/resources/css/bootstrap.min.csss" media="screen">
+
+    <link type="text/css" rel="stylesheet" href="/resources/css/bootstrap.min.css" media="screen">
     <link type="text/css" rel="stylesheet" href="/resources/css/font-awesome.min.css" media="screen">
     <link type="text/css" rel="stylesheet" href="/resources/css/main.css" media="screen">
     <link type="text/css" rel="stylesheet" href="/resources/css/simple-sidebar.css" media="screen">
@@ -46,26 +46,6 @@
                 <ul class="sidebar-nav">
                     <li class="sidebar-brand">
                         <div style="width:234px; height:56px; background-color: #f5f5f5; margin:8px;">
-                            <div style="float:left">
-                                <img src="/resources/images/sidebar_user.png" style="width: 20px; height: 20px;">
-                                <?=$_SESSION['id']?>
-                            </div>
-                            <!--<div style="float:right; padding:16px">
-                                <div style="background-color:#3b52af; border-radius:20px; width:53px; height:22px">
-                                </div>
-                                <?=$_SESSION['point']?>
-                            </div>-->
-                        </div>
-                    </li>
-                    <li>
-                        <div data-toggle="modal" data-target="#myModal">
-                            <div class="text-center" style="width:253px; height:203px;     padding-top: 64px;">
-                                <img src="/resources/images/sidebar_point.png" style="width: 20px; height: 20px; margin-bottom:10px">
-                                <div style="font-size:1.5em; color:black;">포인트 충전</div>
-                                <div style="font-size:1.1em; color:#9b9b9b;">
-                                    <div id="point">보유 포인트 <?=$_SESSION['point']?>P</div>
-                                </div>
-                            </div>
                         </div>
                     </li>
                     <li>
@@ -91,33 +71,14 @@
                 </ul>
             </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">포인트 충전</h4>
-                        </div>
-                        <div class="modal-body">
-                            <button type="button" class="btn btn-default" onClick="request()">충전하실래요? ㅎ</button>
 
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- /#sidebar-wrapper -->
             <!-- Page Content -->
             <div id="page-content-wrapper" style=" margin-top: 18px;">
                 <div class="container-fluid">
                     <div class="text-center">
                         <div style="font-size:3em" class="form-space">
-                            <div><img src="/resources/images/login_logo.png" style="width: 75px; height: 75px;"></div>
-                            Printee
+                            과제 도우미 서비스
                         </div>
                         <div style="font-size:1.1em; margin: 20px 0 40px 0; line-height: 29px;">
                             바쁜 일상 속 프린트를 손쉽게<br>
@@ -128,7 +89,7 @@
                             <form action="login.php" method="POST" name="login">
                                 <input type="text" class="form-control form-space btn_max" placeholder="아이디" id="id" name="id">
                                 <input type="password" class="form-control form-space btn_max" placeholder="비밀번호" id="pw" name="pw">
-                                <input type="button" class="btn btn-primary form-space btn_max" style="background-color:#606fb3;" onClick="javascript:login()" value="로그인">
+                                <input type="button" class="btn btn-primary form-space btn_max" style="background-color:#606fb3;" onClick="javascript:gologin()" value="로그인">
                             </form>
                         </div>
 

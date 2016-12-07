@@ -19,7 +19,7 @@ function post_to_url(path, params, method) {
 var securedUsername;
 var securedPassword;
 
-function login(){
+function gologin(){
   if(!document.getElementById('id').value){
     alert("아이디를 입력하세요!");
     document.getElementById('id').focus();
