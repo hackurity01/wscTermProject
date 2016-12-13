@@ -1,29 +1,15 @@
-package koreatech.cse.controller;
+package koreatech.cse.controller.rest;
 
-import domain.rest.cs.daum.blog.DaumBlog;
-import domain.rest.cs.daum.board.DaumBoard;
-import domain.rest.cs.daum.knowledge.DaumKnowledge;
-import domain.rest.cs.daum.web.Web;
-import domain.rest.cs.google.GoogleSearch;
-import domain.rest.cs.naver.blog.Blog;
-import domain.rest.cs.naver.cafearticle.CafeArticle;
-import domain.rest.cs.naver.encyc.Encyc;
-import domain.rest.cs.naver.kin.Kin;
-import domain.rest.cs.naver.webkr.Webkr;
 import koreatech.cse.domain.Assi;
 import koreatech.cse.domain.Clss;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.snu.ids.ha.ma.MorphemeAnalyzer;
-import org.snu.ids.ha.ma.Sentence;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,46 +17,94 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.security.interfaces.RSAKey;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
- * Created by YDK on 2016-12-08.
+ * Created by 성준이 on 2016-12-13.
  */
-
 @Controller
-@RequestMapping("/login")
-public class LoginController {
-    private static final String NAVER_CLIENT_ID = "zzfxWt08wZ83tKDkkQG5";
-    private static final String NAVER_CLIENT_SECRET = "uOX0hfGJU2";
-    private static final String NAVER_REST_SERVICE_URI = "https://openapi.naver.com/v1/search";
-    private static final String DAUM_API_KEY = "3290ef3cd3ab379e6491a313800f28e7";
-    private static final String DAUM_REST_SERVICE_URI = "https://apis.daum.net/search";
-    private static final String GOOGLE_REST_SERVICE_URI = "https://www.googleapis.com/customsearch/v1";
-    private static final String GOOGLE_API_KEY = "AIzaSyBvjZSmEnhIbjoOS3Y5gMHtNHwOlDo1Tfo";
-    private static final String GOOGLE_CX = "016904682003137614969:vx9ytdzgvoq";
+@RequestMapping("/assign")
+public class AssignListController {
+    String session = "";
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String login(Model model,
-                        @RequestParam(value = "publicKeyModulus") String publicKeyModulus,
-                        @RequestParam(value = "publicKeyExponent") String publicKeyExponent,
-                        @RequestParam(value = "rsaUserid") String rsaUserid,
-                        @RequestParam(value = "rsaPassword") String rsaPassword,
-                        @RequestParam(value = "session") String session,
-                        @RequestParam(value = "userID") String userID,
-                        @RequestParam(value = "userPW") String userPW) {
-        /* 리스트 변수 */
+    @RequestMapping(value="/{id}/{pw}", method= RequestMethod.GET)
+    public String assign(Model model, @PathVariable("id") String id, @PathVariable("pw") String pw){
+        try {
+            URL url = new URL("http://el.koreatech.ac.kr/intro.do");
+            URLConnection conn = url.openConnection();
+
+            conn.connect();
+
+            Map m = conn.getHeaderFields();
+            Collection c = (Collection) m.get("Set-Cookie");
+            String cookie = "";
+            for(Iterator i = c.iterator(); i.hasNext();){
+                cookie = ((String)i.next()).split(";")[0];
+                if(cookie.contains("JSESSIONID")) {
+                    session = cookie;
+                }
+            }
+            System.out.println(session);
+            System.out.println("\n==========\n"+cookie);
+
+            System.out.println("id는 " + id);
+            System.out.println("pw는 " + pw);
+            String publicKeyModulus = "";
+            String publicKeyExponent = "";
+
+            InputStream is = conn.getInputStream();
+            Scanner scan = new Scanner(is);
+            while (scan.hasNext()) {
+                String source_line = scan.nextLine();
+                if(source_line.contains("id=\"publicKeyModulus\""))
+                    publicKeyModulus = source_line.split("id=\"publicKeyModulus\" value=\"")[1].split("\"/>")[0];
+                if(source_line.contains("id=\"publicKeyExponent\""))
+                    publicKeyExponent = source_line.split("id=\"publicKeyExponent\" value=\"")[1].split("\"/>")[0];
+            }
+            scan.close();
+
+            model.addAttribute("publicKeyModulus", publicKeyModulus);
+            model.addAttribute("publicKeyExponent", publicKeyExponent);
+            model.addAttribute("session", session);
+            model.addAttribute("id", id);
+            model.addAttribute("pw", pw);
+
+        } catch (MalformedURLException e) {
+            System.out.println("The URL address is incorrect.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("It can't connect to the web page.");
+            e.printStackTrace();
+        }
+        return "temp";
+    }
+
+    @RequestMapping(method= RequestMethod.POST, produces = "application/json; charset=utf-8")
+    public ResponseEntity<ArrayList<Clss>> getApi(@RequestParam(value = "publicKeyModulus") String publicKeyModulus,
+                                                  @RequestParam(value = "publicKeyExponent") String publicKeyExponent,
+                                                  @RequestParam(value = "rsaUserid") String rsaUserid,
+                                                  @RequestParam(value = "rsaPassword") String rsaPassword,
+                                                  @RequestParam(value = "session") String session,
+                                                  @RequestParam(value = "userID") String userID,
+                                                  @RequestParam(value = "userPW") String userPW) {
+        return new ResponseEntity<ArrayList<Clss>>(getJson(publicKeyModulus, publicKeyExponent, rsaUserid, rsaPassword, session, userID, userPW), HttpStatus.OK);
+    }
+
+    public ArrayList<Clss> getJson(String publicKeyModulus, String publicKeyExponent, String rsaUserid, String rsaPassword, String session, String userID, String userPW) {
+
         ArrayList<Clss> clsList = new ArrayList<Clss>(); //파싱으로 얻은 과제리스트 완성본. 과목을 의미하는 Clss 객체 내부에 과제를 의미하는 Alss 어레이 리스트가 존재함.
         ArrayList<Assi> Alist; //각 과제의 정보를 담고있는 Assi 객체의 어레이리스트. 나중에 Clss 객체에 통째로 저장됨.
         Clss cls; //Class, 즉 과목을 의미하는 클래스. 클래스 이름인 name 필드와 과제 정보 리스트인 Alist 어레이 리스트를 가지고 있음.
         Assi a; //Assignment, 즉 과제를 의미하는 클래스. 과제의 제목인 title 필드와 과제 내용인 content필드, 그리고 LectureValue를 가지고 있다.(왜 있는지는 모르겠음 유동균이 만들어서)
         String searchKey = "";
         ArrayList<String> contentList = new ArrayList<String>();
+
 
         try {
             /////////////////////////////////// 로그인 하기 //////////////////////////////////
@@ -79,6 +113,13 @@ public class LoginController {
             URLConnection conn = login_url.openConnection();
             conn.setDoOutput(true);
             conn.setUseCaches(false);
+            System.out.println(publicKeyModulus);
+            System.out.println(publicKeyExponent);
+            System.out.println(rsaUserid);
+            System.out.println(rsaPassword);
+            System.out.println(session);
+            System.out.println(userID);
+            System.out.println(userPW);
 
             conn.setRequestProperty("Accept", "application/json, text/javascript, */*; q=0.01");
             conn.setRequestProperty("Origin", "http://el.koreatech.ac.kr");
@@ -332,58 +373,7 @@ public class LoginController {
                     Alist.get(i).setContent(content);
                     System.out.println("get " + i + "는 : " + Alist.get(i).getContent());
                     i++;
-                    //a.setContent(content);
-                    //System.out.println("write_doc.select 디브 : " + content);
 
-                    //String searchKey = "";
-
-
-                    /*
-                    ////////////////////////// 키워드 추출 ////////////////////////////////
-                    System.out.println("키워드 추출 -------------------------");
-                    try {
-                        MorphemeAnalyzer ma = new MorphemeAnalyzer();
-                        ma.createLogger(null);
-                        List ret = ma.analyze(content);
-                        ret = ma.postProcess(ret);
-                        ret = ma.leaveJustBest(ret);
-                        List stl = ma.divideToSentences(ret);
-
-                        for (int i = 0; i < stl.size(); i++) {
-                            Sentence st = (Sentence) stl.get(i);
-                            if (st.getSentence().length() < 1) {
-                                System.out.println("length : 0\n");
-                                continue;
-                            }
-                            System.out.println("===>  " + st.getSentence());
-                            for (int j = 0; j < st.size(); j++) {
-                                if (st.get(j).toString().length() < 1) {
-                                    System.out.println("length : 0\n");
-                                    continue;
-                                }
-                                Pattern pattern = Pattern.compile("[0-9]+/([^\\+]*)/NNG");
-                                Matcher matcher = pattern.matcher(st.get(j).toString());
-                                String key = "";
-                                while (matcher.find()) {
-                                    key += matcher.group(1);
-                                }
-                                searchKey += key + " ";
-                                System.out.println("key : " + key);
-                            }
-                        }
-                        //검색
-                        System.out.println("searchKey : " + searchKey);
-                        //a.setContent(searchKey);
-                        contentList.add(searchKey);
-                        /////원래주석
-                        //cls.addAss(a);
-                        ////
-                        //ma.closeLogger();
-                    } catch (Exception e) {
-                        System.out.println("트라이캐치");
-                        e.printStackTrace();
-                        System.exit(0);
-                    }*/
                 } // 과제 반복 끝
 
                 //System.out.println("aa/");
@@ -418,26 +408,6 @@ public class LoginController {
         }
 
 
-        model.addAttribute("clsList", clsList);
-
-
-
-        return "login";
+        return clsList;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

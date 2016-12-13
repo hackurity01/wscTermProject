@@ -3,7 +3,7 @@ package koreatech.cse.domain;
 /**
  * Created by YDK on 2016-12-06.
  */
-public class Assignment {
+public class Assi {
     private String title;
     private String lectureLectureValue;
     private String content;
@@ -16,9 +16,16 @@ public class Assignment {
         this.content = content;
     }
 
-    public Assignment(String title, String lectureLectureValue){
+    public Assi(String title, String content){
         this.title = title;
-        this.lectureLectureValue = lectureLectureValue;
+        this.content = content;
+        this.lectureLectureValue = null;
+    }
+
+    public Assi(){
+        this.title = null;
+        this.lectureLectureValue = null;
+        this.content = null;
     }
 
     public String getTitle() {
