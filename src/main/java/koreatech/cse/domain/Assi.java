@@ -6,6 +6,15 @@ package koreatech.cse.domain;
 public class Assignment {
     private String title;
     private String lectureLectureValue;
+    private String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public Assignment(String title, String lectureLectureValue){
         this.title = title;
